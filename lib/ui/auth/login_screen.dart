@@ -32,75 +32,83 @@ class _LoginScreenState extends State<LoginScreen> {
             Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(32.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  child: Icon(
-                    Icons.person,
-                    size: 50,
-                  ),
-                  radius: 45,
-                ),
-                SizedBox(
-                  height: 35,
-                ),
-                TextFormField(
-                  controller: value.email,
-                  validator: (val) {
-                    return val!.isEmpty ? "required" : null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    icon: Icon(Icons.email, color: Colors.black),
-                    filled: true,
-                    fillColor: Colors.deepPurple.withOpacity(0.2),
-                  ),
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  obscureText: value.isHiden,
-                  controller: value.password,
-                  validator: (val) {
-                    return val!.isEmpty ? "required" : null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    icon: Icon(Icons.lock, color: Colors.black),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        value.klickHiden();
-                      },
-                      icon: value.isHiden
-                      ? const Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility)
+            child: Form(
+              key: value.keyForm,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    child: Icon(
+                      Icons.person,
+                      size: 50,
                     ),
-                    filled: true,
-                    fillColor: Colors.deepPurple.withOpacity(0.2),
+                    radius: 45,
                   ),
-                ),
-                SizedBox(height: 25),
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  onPressed: () {},
-                  color: Colors.deepPurple,
-                  height: 45,
-                  minWidth: 200,
-                  textColor: Colors.white,
-                  child: Text(
-                    "LOGIN",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 35,
                   ),
-                )
-              ],
+                  TextFormField(
+                    controller: value.email,
+                    validator: (val) {
+                      return val!.isEmpty ? "required" : null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
+                      icon: Icon(Icons.email, color: Colors.black),
+                      filled: true,
+                      fillColor: Colors.deepPurple.withOpacity(0.2),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  TextFormField(
+                    obscureText: value.isHiden,
+                    controller: value.password,
+                    validator: (val) {
+                      return val!.isEmpty ? "required" : null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
+                      icon: Icon(Icons.lock, color: Colors.black),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          value.klickHiden();
+                        },
+                        icon: value.isHiden
+                        ? const Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility)
+                      ),
+                      filled: true,
+                      fillColor: Colors.deepPurple.withOpacity(0.2),
+                    ),
+                  ),
+                  SizedBox(height: 25),
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    onPressed: () async {
+                      if(value.keyForm.currentState!.validate()){
+                        await value.login(context);
+                      }
+
+                    },
+                    color: Colors.deepPurple,
+                    height: 45,
+                    minWidth: 200,
+                    textColor: Colors.white,
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
